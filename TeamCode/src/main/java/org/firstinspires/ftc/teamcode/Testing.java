@@ -63,6 +63,7 @@ public class Testing extends LinearOpMode {
     private DcMotor leftRear = null;
     private DcMotor rightRear = null;*/
     private DcMotorEx launcher = null;
+    private DcMotor intake = null;
 
     @Override
     public void runOpMode() {
@@ -77,6 +78,7 @@ public class Testing extends LinearOpMode {
         leftRear  = hardwareMap.get(DcMotor.class, "left_rear");
         rightRear = hardwareMap.get(DcMotor.class, "right_rear");*/
         launcher = hardwareMap.get(DcMotorEx.class, "launcher");
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
 
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -85,6 +87,7 @@ public class Testing extends LinearOpMode {
         /*leftFront.setDirection(DcMotor.Direction.REVERSE);
         rightFront.setDirection(DcMotor.Direction.FORWARD);*/
         launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         launcher.setVelocityPIDFCoefficients(5,0,0.1,11.5);
 
@@ -98,7 +101,15 @@ public class Testing extends LinearOpMode {
 
             launcher.setVelocity(gamepad1.right_trigger*2200);
 
-
+            if (gamepad1.right_bumper){
+                intake.setPower(1);
+            }
+            else if (gamepad1.left_bumper){
+                intake.setPower(-1);
+            }
+            else{
+                intake.setPower(0);
+            }
 
 
             // Set up a variable for each drive wheel to save power level for telemetry
