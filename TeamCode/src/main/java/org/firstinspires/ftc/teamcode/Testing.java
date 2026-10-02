@@ -64,6 +64,9 @@ public class Testing extends LinearOpMode {
     private DcMotor rightRear = null;*/
     private DcMotorEx launcher = null;
     private DcMotor intake = null;
+    private CRServo slide = null;
+
+    private int slideCounter = 0;
 
     @Override
     public void runOpMode() {
@@ -78,7 +81,8 @@ public class Testing extends LinearOpMode {
         leftRear  = hardwareMap.get(DcMotor.class, "left_rear");
         rightRear = hardwareMap.get(DcMotor.class, "right_rear");*/
         launcher = hardwareMap.get(DcMotorEx.class, "launcher");
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        intake = hardwareMap.get(DcMotor.class, "intake");
+        slide = hardwareMap.get(CRServo.class, "slide");
 
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -111,6 +115,27 @@ public class Testing extends LinearOpMode {
                 intake.setPower(0);
             }
 
+            if (gamepad1.x) {
+                if (slideCounter < 1500) {
+                    slide.setPower(-0.5);
+                    slideCounter++;
+                }else {
+                    slide.setPower(-0.1);
+                }
+
+
+            }else if (gamepad1.y) {
+                if (slideCounter > 0) {
+                    slide.setPower(0.5);
+                    slideCounter--;
+                }else {
+                    slide.setPower(0.05);
+                }
+
+            }else {
+                slide.setPower(0);
+            }
+
 
             // Set up a variable for each drive wheel to save power level for telemetry
             double leftPower;
@@ -138,6 +163,7 @@ public class Testing extends LinearOpMode {
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            telemetry.addData("Slide Length", slideCounter);
             telemetry.update();
         }
     }
