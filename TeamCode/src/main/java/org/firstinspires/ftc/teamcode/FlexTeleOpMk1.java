@@ -90,6 +90,7 @@ public class FlexTeleOpMk1 extends LinearOpMode {
         launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         launcher.setVelocityPIDFCoefficients(5,0,0.1,11.5);
 
         waitForStart();
