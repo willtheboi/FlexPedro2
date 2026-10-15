@@ -17,10 +17,16 @@ public class ExampleAuto extends OpMode {
     private Follower follower; // Add this
     private final PoseFactory p = PoseFactory.degrees(); // add this
     // our poses
-    private final Pose startPose = p.of(24, 24, 0);
-    private final Pose park = p.of(48, 48, 90);
+    private final Pose startPose = p.of(84, 133, 270);
+    private final Pose park = p.of(84, 120, 270);
+    private final Pose startPose2 = p.of(84, 120, 270);
+    private final Pose park2 = p.of(130, 120, 270);
     private Path park() {
         return line(startPose, park).linear(startPose, park);
+    }
+
+    private Path park2() {
+        return line(startPose2, park2).linear(startPose2, park2);
     }
     private final Pose controlPose = p.of(36, 60, 45);
     private Path parkCurvy() {
@@ -30,13 +36,16 @@ public class ExampleAuto extends OpMode {
     @Override
     public void init() {
         Scheduler.reset();
+
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
+
     }
 
     @Override
     public void start() {
         schedule(follow(follower, park()));
+        schedule(follow(follower, park2()));
         // using the same park path from the last page
     }
 
