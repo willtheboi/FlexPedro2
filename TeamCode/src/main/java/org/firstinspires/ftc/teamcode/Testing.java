@@ -103,7 +103,7 @@ public class Testing extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            launcher.setVelocity(gamepad1.right_trigger*2200);
+            launcher.setVelocity(gamepad1.right_trigger*1100);
 
             if (gamepad1.right_bumper){
                 intake.setPower(1);
