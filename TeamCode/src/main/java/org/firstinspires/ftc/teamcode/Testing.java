@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -65,6 +66,7 @@ public class Testing extends LinearOpMode {
     private DcMotorEx launcher = null;
     private DcMotor intake = null;
     private CRServo slide = null;
+    private Servo door = null;
 
     private int slideCounter = 0;
 
@@ -83,6 +85,7 @@ public class Testing extends LinearOpMode {
         launcher = hardwareMap.get(DcMotorEx.class, "launcher");
         intake = hardwareMap.get(DcMotor.class, "intake");
         slide = hardwareMap.get(CRServo.class, "slide");
+        door = hardwareMap.get(Servo.class, "door");
 
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -103,7 +106,7 @@ public class Testing extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            launcher.setVelocity(gamepad1.right_trigger*1100);
+            launcher.setVelocity(gamepad1.right_trigger*2000);
 
             if (gamepad1.right_bumper){
                 intake.setPower(1);
@@ -136,6 +139,11 @@ public class Testing extends LinearOpMode {
                 slide.setPower(0);
             }
 
+            if (gamepad1.a) {
+                door.setPosition(0.12);
+            }else if (gamepad1.b){
+                door.setPosition(0);
+            }
 
             // Set up a variable for each drive wheel to save power level for telemetry
             double leftPower;
@@ -162,7 +170,8 @@ public class Testing extends LinearOpMode {
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            //telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+            telemetry.addData("Launcher Velocity", launcher.getVelocity());
             telemetry.addData("Slide Length", slideCounter);
             telemetry.update();
         }
