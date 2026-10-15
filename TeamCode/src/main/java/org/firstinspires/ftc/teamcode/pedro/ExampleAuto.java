@@ -17,8 +17,8 @@ public class ExampleAuto extends OpMode {
     private Follower follower; // Add this
     private final PoseFactory p = PoseFactory.degrees(); // add this
     // our poses
-    private final Pose startPose = p.of(24, 24, 0);
-    private final Pose park = p.of(48, 48, 90);
+    private final Pose startPose = p.of(84, 133, 270);
+    private final Pose park = p.of(84, 120, 270);
     private Path park() {
         return line(startPose, park).linear(startPose, park);
     }
@@ -30,6 +30,7 @@ public class ExampleAuto extends OpMode {
     @Override
     public void init() {
         Scheduler.reset();
+
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
     }
