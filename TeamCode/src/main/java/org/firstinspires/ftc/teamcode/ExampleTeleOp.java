@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static com.pedropathing.follower.ManualDrive.*;
-
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.ManualDrive;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -27,6 +25,7 @@ public class ExampleTeleOp extends OpMode {
                 gamepad1.left_stick_x,
                 gamepad1.right_stick_x
         );
+
         follower.update();
     }
 }
