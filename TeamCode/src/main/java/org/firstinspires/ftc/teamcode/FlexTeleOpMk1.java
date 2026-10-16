@@ -68,8 +68,10 @@ public class FlexTeleOpMk1 extends LinearOpMode {
     private CRServo slide = null;
     private Servo door = null;
 
+    private final int doorCounterSet = 400;
     private int slideCounter = 0;
     private Boolean openDoor = false;
+    private int doorCounter = doorCounterSet;
 
     @Override
     public void runOpMode() {
@@ -103,7 +105,9 @@ public class FlexTeleOpMk1 extends LinearOpMode {
             double x = gamepad1.left_stick_x * 1.1;
             double rx = gamepad1.right_stick_x;
 
-            launcher.setVelocity(gamepad1.right_trigger*2000);
+            doorCounter ++;
+
+            launcher.setVelocity(gamepad1.right_trigger*1800);
 
             if (gamepad1.right_bumper){
                 intake.setPower(1);
@@ -135,7 +139,7 @@ public class FlexTeleOpMk1 extends LinearOpMode {
                 slide.setPower(0);
             }
 
-            if (gamepad1.a&&launcher.getVelocity()>1500) {
+            /*if (gamepad1.a&&launcher.getVelocity()>1500) {
                 openDoor = true;
             }else if (gamepad1.b||launcher.getVelocity()<=1500){
                 openDoor = false;
@@ -143,6 +147,27 @@ public class FlexTeleOpMk1 extends LinearOpMode {
 
             if (openDoor){
                 door.setPosition(0.12);
+            }else{
+                door.setPosition(0.02);
+            }*/
+
+            if (gamepad1.a) {
+                openDoor = true;
+            }else if (gamepad1.b){
+                openDoor = false;
+            }
+
+            if (openDoor){
+                    if (door.getPosition()<0.1){
+                        if (doorCounter >= 50){
+                            door.setPosition(0.12);
+                            doorCounter = 0;
+                        }
+                    }else if (doorCounter >= doorCounterSet){
+                        door.setPosition(0.08);
+                        doorCounter = 0;
+                    }
+
             }else{
                 door.setPosition(0.02);
             }
@@ -161,6 +186,7 @@ public class FlexTeleOpMk1 extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Launcher Velocity", launcher.getVelocity());
             telemetry.addData("Slide Length", slideCounter);
+            telemetry.addData("Door Counter", doorCounter);
             telemetry.update();
         }
     }
