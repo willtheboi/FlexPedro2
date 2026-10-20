@@ -81,10 +81,10 @@ public class FlexTeleOpMk1 extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        /*leftFront  = hardwareMap.get(DcMotor.class, "left_front");
+        leftFront  = hardwareMap.get(DcMotor.class, "left_front");
         rightFront = hardwareMap.get(DcMotor.class, "right_front");
         leftRear  = hardwareMap.get(DcMotor.class, "left_rear");
-        rightRear = hardwareMap.get(DcMotor.class, "right_rear");*/
+        rightRear = hardwareMap.get(DcMotor.class, "right_rear");
         launcher = hardwareMap.get(DcMotorEx.class, "launcher");
         intake = hardwareMap.get(DcMotor.class, "intake");
         slide = hardwareMap.get(CRServo.class, "slide");
@@ -178,10 +178,10 @@ public class FlexTeleOpMk1 extends LinearOpMode {
             double frontRightPower = (y - x - rx) / denominator;
             double backRightPower = (y + x - rx) / denominator;
 
-            /*leftFront.setPower(frontLeftPower);
+            leftFront.setPower(frontLeftPower);
             leftRear.setPower(backLeftPower);
             rightFront.setPower(frontRightPower);
-            rightRear.setPower(backRightPower);*/
+            rightRear.setPower(backRightPower);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Launcher Velocity", launcher.getVelocity());
